@@ -8,7 +8,7 @@ app = Flask(__name__)
 TELEGRAM_TOKEN = os.environ.get('TELEGRAM_TOKEN', 'YOUR_BOT_TOKEN')
 TELEGRAM_API_URL = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}'
 
-INFO_API_URL = 'https://api-info-nxx.onrender.com/info?id={user_id}'
+INFO_API_URL = 'https://api-info-nxx.onrender.com/info?uid={user_id}'
 
 # Dữ liệu tài khoản mẫu
 SAMPLE_ACCOUNT_INFO = {
