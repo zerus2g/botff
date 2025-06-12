@@ -183,6 +183,10 @@ def webhook():
             send_message(chat_id, "Sử dụng lệnh /info + uid để xem thông tin tài khoản")
     return {'ok': True}
 
+@app.route('/ping', methods=['GET'])
+def ping():
+    return 'OK', 200
+
 def get_user_info(user_id):
     try:
         resp = requests.get(INFO_API_URL.format(user_id=user_id), timeout=5)
