@@ -150,14 +150,29 @@ def webhook():
     data = request.get_json()
     if 'message' in data:
         chat_id = data['message']['chat']['id']
-        user_id = data['message']['from']['id']
         text = data['message'].get('text', '')
-        if text.strip().lower() == '/info':
-            info_text = format_account_info(SAMPLE_ACCOUNT_INFO)
-            send_message(chat_id, info_text)
+        
+        if text.startswith('/info'):
+            # Tách uid từ lệnh /info
+            parts = text.split()
+            if len(parts) > 1:
+                uid = parts[1]
+                # Lấy thông tin từ API với uid được cung cấp
+                info = get_user_info(uid)
+                if info:
+                    try:
+                        # Parse JSON response và format thông tin
+                        account_info = json.loads(info)
+                        formatted_info = format_account_info(account_info)
+                        send_message(chat_id, formatted_info)
+                    except json.JSONDecodeError:
+                        send_message(chat_id, "Không thể lấy thông tin tài khoản. Vui lòng thử lại sau.")
+                else:
+                    send_message(chat_id, "Không tìm thấy thông tin tài khoản.")
+            else:
+                send_message(chat_id, "Vui lòng nhập uid sau lệnh /info. Ví dụ: /info 123456789")
         else:
-            info = get_user_info(user_id)
-            send_message(chat_id, info)
+            send_message(chat_id, "Sử dụng lệnh /info + uid để xem thông tin tài khoản")
     return {'ok': True}
 
 def get_user_info(user_id):
