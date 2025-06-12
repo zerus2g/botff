@@ -127,21 +127,29 @@ def format_account_info(info):
     basic = info.get('basicInfo', {})
     clan = info.get('clanBasicInfo', {})
     pet = info.get('petInfo', {})
-    signature = info.get('socialInfo', {}).get('signature', '')
+    profile = info.get('profileInfo', {})
+    captain = info.get('captainBasicInfo', {})
+    social = info.get('socialInfo', {})
     diamond = info.get('diamondCostRes', {}).get('diamondCost', '-')
+    credit = info.get('creditScoreInfo', {})
+    
     return (
         "🎮 THÔNG TIN TÀI KHOẢN\n"
         "━━━━━━━━━━━━━━━━━━\n"
-        f"👤 Nickname: {basic.get('nickname')}\n"
-        f"🏅 Level: {basic.get('level')}\n"
-        f"⭐ Rank: {basic.get('rank')}\n"
-        f"❤️ Lượt thích: {basic.get('liked')}\n"
+        f"👤 Nickname: {basic.get('nickname', '-')}\n"
+        f"🆔 Account ID: {basic.get('accountId', '-')}\n"
+        f"🏅 Level: {basic.get('level', '-')}\n"
+        f"⭐ Rank: {basic.get('rank', '-')}\n"
+        f"❤️ Lượt thích: {basic.get('liked', '-')}\n"
+        f"💎 Kim cương đã tiêu: {diamond}\n"
+        f"📝 Chữ ký: {social.get('signature', '-')}\n"
         "\n"
-        f"🏆 Clan: {clan.get('clanName', 'Không có')}\n"
+        f"🏆 Clan: {clan.get('clanName', 'Không có')} (Lv.{clan.get('clanLevel', '-')})\n"
+        f"👑 Captain: {captain.get('nickname', '-')}\n"
+        "\n"
         f"🐾 Pet: {pet.get('name', 'Không có')} (Lv.{pet.get('level', '-')})\n"
         "\n"
-        f"💎 Kim cương đã tiêu: {diamond}\n"
-        f"📝 Chữ ký: {signature}\n"
+        f"🎯 Credit Score: {credit.get('creditScore', '-')}\n"
         "━━━━━━━━━━━━━━━━━━"
     )
 
